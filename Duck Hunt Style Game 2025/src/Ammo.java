@@ -1,4 +1,3 @@
-import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
@@ -7,15 +6,9 @@ import java.awt.Toolkit;
 import java.awt.geom.AffineTransform;
 import java.net.URL;
 
-// The Duck class represents a picture of a duck that can be drawn on the screen.
-public class Duck {
-    // Instance variables (data that belongs to each Duck object)
+public class Ammo {
+	 // Instance variables (data that belongs to each Duck object)
     private Image img;               // Stores the picture of the duck
-    
-    private Image normal; 
-    private Image stunned; 
-    
-     
     private AffineTransform tx;      // Used to move (translate) and resize (scale) the image
 
     // Variables to control the size (scale) of the duck image
@@ -30,34 +23,23 @@ public class Duck {
     private int vx;
     private int vy;
 
-    public boolean debugging = true; 
-    
-    
     // Constructor: runs when you make a new Duck object
-    public Duck() {
-        normal = getImage("/imgs/flyingRedBook_spookyGame.gif"); // Load the image file
-        stunned = getImage("/imgs/spookyGame_stunnedRedBook.gif");
-        
-        img = normal;
+    public Ammo() {
+        img = getImage("/imgs/ammoBar3.png"); // Load the image file
         
         tx = AffineTransform.getTranslateInstance(0, 0); // Start with image at (0,0)
         
         // Default values
-        scaleX = 4;
-        scaleY = 4;
-        x = 750;
-        y = 125;
+        scaleX = 3.5;
+        scaleY = 3.5;
+        x = 5;
+        y = -15;
 
-        
-       vx = 6;   
-       vy = 4;
-        
-        
         init(x, y); // Set up the starting location and size
     }
     
     //2nd constructor to initialize location and scale!
-    public Duck(int x, int y, int scaleX, int scaleY) {
+    public Ammo(int x, int y, int scaleX, int scaleY) {
     	this();
     	this.x 		= x;
     	this.y 		= y;
@@ -67,7 +49,7 @@ public class Duck {
     }
     
     //2nd constructor to initialize location and scale!
-    public Duck(int x, int y, int scaleX, int scaleY, int vx, int vy) {
+    public Ammo(int x, int y, int scaleX, int scaleY, int vx, int vy) {
     	this();
     	this.x 		= x;
     	this.y 		= y;
@@ -86,38 +68,12 @@ public class Duck {
     
     // Changes the picture to a new image file
     public void changePicture(String imageFileName) {
-        img = getImage("/imgs/"+ imageFileName);
+        img = getImage("/imgs/"+imageFileName);
         init(x, y); // keep same location when changing image
     }
     
     //update any variables for the object such as x, y, vx, vy
     public void update() {
-    	
-    	x += vx; 
-    	
-    	if(x >= 860 || x <= -20) {
-    		vx *= -1; 
-    	}
-    	
-    	y += vy; 
-    	
-    	if(y <= -20) {
-    		vy *= -1; 
-    	}
-    	
-    	//object falling
-    	if(vx == 0 && vy > 10) {
-    		if(y >= 450) {
-    			vy = - (int)(Math.random()*6+3);
-    			vx = (int)(Math.random()*6+3);
-    			 if(Math.random()< 0.5){
-    				vx *= -1; 
-    			 }
-    			 img = normal;
-    		}
-    	}
-    //	regular behavior
-    	if (y >= 475 && vx != 0) vy *= -1; 
     	
     }
     
@@ -126,24 +82,9 @@ public class Duck {
     // Draws the duck on the screen
     public void paint(Graphics g) {
         Graphics2D g2 = (Graphics2D) g;   // Graphics2D lets us draw images
-        tx.scale(0.5, 0.5);
-        if (vx < 0) {
-        		tx.scale(-1, 1);
-        		tx.translate(-img.getWidth(null), 0);
-        }
-        
-        
-        
-        
-        
         g2.drawImage(img, tx, null);      // Actually draw the duck image
         update();
         init(x,y);
-        
-        if(debugging){
-        	g.setColor(Color.green);
-        g.drawRect((int)x, (int)y, 100, 100);
-        }
     }
     
     // Setup method: places the duck at (a, b) and scales it
@@ -156,7 +97,7 @@ public class Duck {
     private Image getImage(String path) {
         Image tempImage = null;
         try {
-            URL imageURL = Duck.class.getResource(path);
+            URL imageURL = Ammo.class.getResource(path);
             tempImage = Toolkit.getDefaultToolkit().getImage(imageURL);
         } catch (Exception e) {
             e.printStackTrace();
@@ -177,35 +118,5 @@ public class Duck {
         y = newY;
         init(x, y);  // Keep current scale
     }
-    
-    
-  //Collisions 
-    public boolean checkCollision(int mX, int mY) {
-    		
-    		//represent mouse as rectangle
-    		Rectangle mouse = new Rectangle(mX, mY, 50, 50);
-    	
-    		Rectangle thisObject = new Rectangle((int)x+50, (int)y+50, 50, 50); 
-    
-    		
-    		if(mouse.intersects(thisObject)) {
-    			
-    			vx = 0;
-    			vy = 12; 
-    			img = stunned; 
-    			
-    			return true;
-    			
-    		}else {
-    			return false; 
-    		}
-    	
-    }
-    
-    
-    
-    
-    
-    
     
 }

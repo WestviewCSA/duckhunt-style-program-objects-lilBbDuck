@@ -7,10 +7,8 @@ import java.awt.Toolkit;
 import java.awt.geom.AffineTransform;
 import java.net.URL;
 
-// The Duck class represents a picture of a duck that can be drawn on the screen.
-public class Duck {
-    // Instance variables (data that belongs to each Duck object)
-    private Image img;               // Stores the picture of the duck
+public class Duck2 {
+	private Image img;               // Stores the picture of the duck
     
     private Image normal; 
     private Image stunned; 
@@ -34,9 +32,9 @@ public class Duck {
     
     
     // Constructor: runs when you make a new Duck object
-    public Duck() {
-        normal = getImage("/imgs/flyingRedBook_spookyGame.gif"); // Load the image file
-        stunned = getImage("/imgs/spookyGame_stunnedRedBook.gif");
+    public Duck2() {
+        normal = getImage("/imgs/flyingGreenBook_spookyGame.gif"); // Load the image file
+        stunned = getImage("/imgs/spookyGame_stunnedGreenBook.gif");
         
         img = normal;
         
@@ -45,19 +43,19 @@ public class Duck {
         // Default values
         scaleX = 4;
         scaleY = 4;
-        x = 750;
+        x = 350;
         y = 125;
 
         
-       vx = 6;   
-       vy = 4;
+       vx = 5;   
+       vy = 3;
         
         
         init(x, y); // Set up the starting location and size
     }
     
     //2nd constructor to initialize location and scale!
-    public Duck(int x, int y, int scaleX, int scaleY) {
+    public Duck2(int x, int y, int scaleX, int scaleY) {
     	this();
     	this.x 		= x;
     	this.y 		= y;
@@ -67,7 +65,7 @@ public class Duck {
     }
     
     //2nd constructor to initialize location and scale!
-    public Duck(int x, int y, int scaleX, int scaleY, int vx, int vy) {
+    public Duck2(int x, int y, int scaleX, int scaleY, int vx, int vy) {
     	this();
     	this.x 		= x;
     	this.y 		= y;
