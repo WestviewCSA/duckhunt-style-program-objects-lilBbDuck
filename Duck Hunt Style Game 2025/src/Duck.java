@@ -15,6 +15,7 @@ public class Duck {
     private Image normal; 
     private Image stunned; 
     
+    private Dog dogObject = new Dog("bhavanaStanding_spookyGame.png");
      
     private AffineTransform tx;      // Used to move (translate) and resize (scale) the image
 
@@ -140,6 +141,8 @@ public class Duck {
         update();
         init(x,y);
         
+        dogObject.paint(g);
+        
         if(debugging){
         	g.setColor(Color.green);
         g.drawRect((int)x, (int)y, 100, 100);
@@ -193,6 +196,11 @@ public class Duck {
     			vx = 0;
     			vy = 12; 
     			img = stunned; 
+    			
+    			this.dogObject.x = (int)x;
+    			this.dogObject.y = 380; 
+    			this.dogObject.vy = -3;
+    			
     			
     			return true;
     			

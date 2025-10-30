@@ -1,6 +1,7 @@
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.GridLayout;
 import java.awt.Image;
@@ -25,6 +26,9 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 	
 	private int count = 3; 
 	
+	private int totalScore = 0; 
+	//private int time = 30; 
+	int waveNum = 1;
 	
 	/**
 	 * Declare and instantiate (create) your objects here
@@ -33,6 +37,8 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 	private Duck2 duck2Object = new Duck2();
 	
 	private Background myBackground = new Background();
+	
+	
 	
 	private Character characterObject = new Character();
 	private Character2 character2Object = new Character2();
@@ -46,7 +52,8 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 	
 	private MyCursor cursor = new MyCursor();
 	
-	
+	Music mouseClickSound = new Music("sparkleSoundOfficial.wav", false); 
+	Music newWave = new Music("bookSoundNewWave.wav", false);
 	
 	public void paint(Graphics pen) {
 		
@@ -67,12 +74,16 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 		
 		backgroundLayerObject.paint(pen);
 		
+		
+		
 		characterObject.paint(pen);
 		
 		character2Object.paint(pen);
 		
 		
 		cursor.paint(pen);
+		
+		
 		
 		if(count == 3) {
 			ammoObject.paint(pen);
@@ -91,6 +102,23 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 			count = 3; 
 		}
 		
+		
+		Font f = new Font("Segoe UI", Font.PLAIN, 50); 
+		pen.setFont(f);
+		pen.setColor(Color.white); 
+		pen.drawString("Score: " + totalScore, 300, 50);
+		//pen.drawString("" + time, 500, 50); 
+		
+		Font font2 = new Font("Segoe UI", Font.PLAIN, 50); 
+		pen.setFont(font2);
+		pen.drawString("Wave " + waveNum, 500, 50);
+		
+		if(totalScore == 5) {
+			totalScore = 0;
+			count = 3;
+			waveNum++; 
+			this.newWave.play(); 
+		}
 		
 	}
 	
@@ -124,6 +152,15 @@ public class Frame extends JPanel implements ActionListener, MouseListener, KeyL
 		
 		count -= 1; 
 		
+		
+		if(this.duckObject.checkCollision(mouse.getX(), mouse.getY()) && count != -1) {
+			totalScore++; 
+		}
+		
+		if(this.duck2Object.checkCollision(mouse.getX(), mouse.getY()) && count != -1) {
+			totalScore++; 
+		}
+		this.mouseClickSound.play(); 
 		
 	}
 
